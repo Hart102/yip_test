@@ -1,0 +1,18 @@
+[
+    { 
+        "id": "ORD12345", 
+        "customer": "John Doe", 
+        "items": ["Burger", "Fries", "Coke"], 
+        "totalPrice": 12.99, 
+        "status": "Pending", 
+        "timestamp": "2025-03-04T12:00:00Z" 
+    },
+    { 
+        "id": "ORD12346", 
+        "customer": "Jane Smith", 
+        "items": ["Pizza", "Pepsi"], 
+        "totalPrice": 15.49, 
+        "status": "Completed", 
+        "timestamp": "2025-03-04T11:45:00Z" 
+    }
+]

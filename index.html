@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product management</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
+<!-- import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import axios from 'axios';
+
+dotenv.config();
+
+const app = express();
+app.use(express.json());
+app.use(cors());
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => console.log('MongoDB Connected'))
+  .catch(err => console.error(err));
+
+// Define a schema and model
+const customerSchema = new mongoose.Schema({
+  name: String,
+  address: String,
+  contact: String,
+  lat: Number,
+  lng: Number,
+  distance: Number,
+});
+
+const Customer = mongoose.model('Customer', customerSchema);
+
+// Predefined location for distance calculation
+const predefinedLocation = { lat: 37.7749, lng: -122.4194 };
+
+// Function to calculate distance using Google Maps API
+const calculateDistance = async (lat, lng) => {
+  try {
+    const response = await axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json`, {
+      params: {
+        origins: `${predefinedLocation.lat},${predefinedLocation.lng}`,
+        destinations: `${lat},${lng}`,
+        key: process.env.GOOGLE_MAPS_API_KEY,
+      },
+    });
+    return response.data.rows[0].elements[0].distance.value / 1000; // Convert meters to kilometers
+  } catch (error) {
+    console.error('Error calculating distance:', error);
+    return null;
+  }
+};
+
+// Routes
+app.post('/api/customers', async (req, res) => {
+  try {
+    const { name, address, contact, lat, lng } = req.body;
+    const distance = await calculateDistance(lat, lng);
+    const customer = new Customer({ name, address, contact, lat, lng, distance });
+    await customer.save();
+    res.status(201).json(customer);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/api/customers', async (req, res) => {
+  try {
+    const customers = await Customer.find();
+    res.status(200).json(customers);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); -->
