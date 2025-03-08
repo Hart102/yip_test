@@ -7,6 +7,7 @@ const Home = () => {
   const [filterStatus, setFilterStatus] = useState("All")
   const [sortString, setSortString] = useState("by_date")
   const filters = ["All", "Pending", "Completed"]
+  const [vissibleOders, setVissibleOders] = useState(8)
 
   const fetchOrders = async () => {
     const response = await fetch("/mockOrders.json")
@@ -45,6 +46,17 @@ const Home = () => {
     })
     setOrders(updatedOrders)
   }
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        setVissibleOders((prev) => prev + 5)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  },[])
 
 
   return (
@@ -99,15 +111,15 @@ const Home = () => {
                 </tr>
               </thead>
               <tbody>
-                {sortedOrders.map(order => (
+                {sortedOrders.slice(0, vissibleOders).map(order => (
                   <tr key={order.id} className="border lg:border-0 lg:text-center">
-                    <td className="pt-4 lg:pt-10 pb-2 border px-1 border-gray-200 lg:border-0 whitespace-nowrap">{order.id}</td>
-                    <td className="pt-4 lg:pt-10 pb-2 border px-1 border-gray-200 lg:border-0 whitespace-nowrap">{order.customer}</td>
-                    <td className="pt-4 lg:pt-10 pb-2 border px-1 border-gray-200 lg:border-0 whitespace-nowrap">{order.items.join(', ')}</td>
-                    <td className="pt-4 lg:pt-10 pb-2 border px-1 border-gray-200 lg:border-0 whitespace-nowrap">$ {order.totalPrice}</td>
-                    <td className="pt-4 lg:pt-10 pb-2 border px-1 border-gray-200 lg:border-0 whitespace-nowrap">{order.status}</td>
-                    <td className="pt-4 lg:pt-10 pb-2 border px-1 border-gray-200 lg:border-0 whitespace-nowrap">{new Date(order.timestamp).toLocaleString()}</td>
-                    <td className="pt-4 lg:pt-10 pb-2 border px-1 border-gray-200 lg:border-0 whitespace-nowrap">
+                    <td className="pt-4 lg:pt-10 pb-2 border px-1 border-gray-200 lg:border-0 lg:border-b whitespace-nowrap">{order.id}</td>
+                    <td className="pt-4 lg:pt-10 pb-2 border px-1 border-gray-200 lg:border-0 lg:border-b whitespace-nowrap">{order.customer}</td>
+                    <td className="pt-4 lg:pt-10 pb-2 border px-1 border-gray-200 lg:border-0 lg:border-b whitespace-nowrap">{order.items.join(', ')}</td>
+                    <td className="pt-4 lg:pt-10 pb-2 border px-1 border-gray-200 lg:border-0 lg:border-b whitespace-nowrap">$ {order.totalPrice}</td>
+                    <td className="pt-4 lg:pt-10 pb-2 border px-1 border-gray-200 lg:border-0 lg:border-b whitespace-nowrap">{order.status}</td>
+                    <td className="pt-4 lg:pt-10 pb-2 border px-1 border-gray-200 lg:border-0 lg:border-b whitespace-nowrap">{new Date(order.timestamp).toLocaleString()}</td>
+                    <td className="pt-4 lg:pt-10 pb-2 border px-1 border-gray-200 lg:border-0 lg:border-b whitespace-nowrap">
                       {order.status === 'Pending' && (
                         <button
                           className="bg-blue-400 cursor-pointer text-white px-4 py-2 rounded"
